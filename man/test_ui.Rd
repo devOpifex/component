@@ -4,12 +4,14 @@
 \alias{test_ui}
 \title{Test generated UI}
 \usage{
-test_ui(id)
+test_ui(id, ...)
 }
 \arguments{
 \item{id}{ID of module}
+
+\item{...}{Any arguments to pass to .test_ui()}
 }
 \description{
-Test generated UI
+UI generated from: .test_ui()
 }
 \keyword{internal}

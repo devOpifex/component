@@ -45,27 +45,8 @@ roclet_process.roclet_component <- function(x, blocks, env, base_path, ...) {
 roclet_output.roclet_component <- function(x, results, base_path, ...) {
   roxygen2::load_pkgload(base_path)
 
-  dir_create_if_missing(base_path, "inst")
-
   for (component in results) {
-    # we remove the generated R file
-    # we're about to re-generate it
-    dir_create_if_missing(base_path, "inst", component$component)
     remove_file_if_exists(component$path_r)
-
-    # create JavaScript
-    writeLines(
-      component$fn_js(),
-      component$path_js
-    )
-
-    writeLines(
-      component$fn_css(),
-      component$path_css
-    )
-
-    # create dependency
-    make_dependency(component)
 
     make_ui(component)
     make_server(component)

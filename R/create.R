@@ -18,5 +18,7 @@ create <- \(name) {
 
   cat(con, "created!")
 
+  usethis::use_package("component")
+
   invisible(con)
 }

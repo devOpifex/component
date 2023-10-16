@@ -4,12 +4,14 @@
 \alias{test_server}
 \title{Test generated server}
 \usage{
-test_server(id)
+test_server(id, ...)
 }
 \arguments{
 \item{id}{ID of module}
+
+\item{...}{Any arguments to pass to .test_server()}
 }
 \description{
-Test generated server
+Server generated from: .test_server()
 }
 \keyword{internal}

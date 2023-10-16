@@ -1,26 +1,60 @@
 #' @component COMPONENT
-.COMPONENT_javascript <- \() {
+NULL
+
+#' COMPONENT javascript
+#' 
+#' COMPONENT javascript component.
+#' 
+#' @param ... Any other argument.
+#' 
+#' @keywords internal
+.COMPONENT_javascript <- \(...) {
   c(
     "$(() => {",
-      "console.log('hello, components!');",
+      "$('{{class red}}').on('mouseenter', (e) => {",
+        "$(e.target).toggleClass('{{ns red}}')",
+      "})",
     "})"
   )
 }
 
-.COMPONENT_css <- \() {
+#' COMPONENT css
+#' 
+#' COMPONENT css component.
+#' 
+#' @param ... Any other argument.
+#' 
+#' @keywords internal
+.COMPONENT_css <- \(...) {
   c(
-    ".red{color:red;}",
+    "{{class red}}{color:red;}",
     "h1{font-weight: bold;}"
   )
 }
 
-.COMPONENT_ui <- \(id) {
-  div(
-    h1("Component", class = "red"),
+#' COMPONENT ui
+#' 
+#' COMPONENT UI component.
+#' 
+#' @param ns Shiny's namespace function.
+#' @param ... Any other argument.
+#' 
+#' @keywords internal
+.COMPONENT_ui <- \(ns, ...) {
+  shiny:.div(
+    shiny::h1("Component", class = ns("red")),
     plotOutput(ns("plot"))
   )
 }
 
-.COMPONENT_server <- \(id) {
-  output$plot <- renderPlot(plot(stats::runif(200)))
+#' COMPONENT server
+#' 
+#' COMPONENT server component.
+#' 
+#' @param input,output,session Arguments passed from mdoule's server.
+#' @param ... Any other argument.
+#' 
+#' @keywords internal
+.COMPONENT_server <- \(input, output, session, ...) {
+  output$plot <- shiny::renderPlot(plot(stats::runif(200)))
 }
