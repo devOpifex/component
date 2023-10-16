@@ -5,11 +5,30 @@
 
 Creating components for [shiny](https://shiny.rstudio.com) inspired by [Vue](https://vuejs.org/)
 
-It solves two "issues" with Shiny modules:
+It solves three "issues" with Shiny modules:
 
 1. Generating scoped (namespaced) CSS and JavaScript code.
 2. Places all the code for a module in a single file.
 3. Bounds CSS, and JavaScript of a module to it
+
+This is inspired from Vue where one defines a component in a single file.
+
+```vue
+<script setup>
+import { ref } from 'vue'
+const count = ref(0)
+</script>
+
+<template>
+  <button @click="count++">Count is: {{ count }}</button>
+</template>
+
+<style scoped>
+button {
+  font-weight: bold;
+}
+</style>
+```
 
 ## Installation
 
