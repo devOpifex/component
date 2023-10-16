@@ -131,10 +131,11 @@ UI and server.
 - `.test_server` - `test_server`
 
 These are the functions that one should use in the application.
+Always work on the functions starting with a dot (e.g.: `.test_ui`).
 
 ## Example
 
-Example based on the abose "test" component.
+Example based on the abose "test" component, after running `devtools::document()`
 
 ```r
 library(shiny)
