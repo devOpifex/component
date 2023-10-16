@@ -9,6 +9,7 @@ It solves two "issues" with Shiny modules:
 
 1. Generating scoped (namespaced) CSS and JavaScript code.
 2. Places all the code for a module in a single file.
+3. Bounds CSS, and JavaScript of a module to it
 
 ## Installation
 
