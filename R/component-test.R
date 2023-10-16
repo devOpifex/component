@@ -9,13 +9,11 @@ NULL
 #' 
 #' @keywords internal
 .test_javascript <- \(...) {
-  c(
-    "$(() => {",
-      "$('{{class red}}').on('mouseenter', (e) => {",
-        "$(e.target).toggleClass('{{ns red}}')",
-      "})",
-    "})"
-  )
+  "$(() => {
+    $('{{class red}}').on('mouseenter', (e) => {
+      $(e.target).toggleClass('{{ns red}}')
+    })
+  })"
 }
 
 #' test css
@@ -43,7 +41,7 @@ NULL
 .test_ui <- \(ns, ...) {
   shiny::div(
     shiny::h1("Component", class = ns("red")),
-    plotOutput(ns("plot"))
+    shiny::plotOutput(ns("plot"))
   )
 }
 

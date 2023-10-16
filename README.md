@@ -33,6 +33,13 @@ component::create("test")
 
 This creates a new file in `R/` named `component-test.R`, see below.
 
+Components generate code via `devtools::document()` (more on that later)
+add the roxygen2 roclet to your `DESCRIPTION`, e.g.:
+
+```
+Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd", "component::roclet_component"))
+```
+
 ## Component Anatomy
 
 The default component as created by `create` looks something like the code below.
@@ -49,13 +56,11 @@ NULL
 #' 
 #' @keywords internal
 .test_javascript <- \(...) {
-  c(
-    "$(() => {",
-      "$('{{class red}}').on('mouseenter', (e) => {",
-        "$(e.target).toggleClass('{{ns red}}')",
-      "})",
-    "})"
-  )
+    "$(() => {
+      $('{{class red}}').on('mouseenter', (e) => {
+        $(e.target).toggleClass('{{ns red}}');
+      })
+    })"
 }
 
 #' test css
@@ -134,7 +139,7 @@ UI and server.
 These are the functions that one should use in the application.
 Always work on the functions starting with a dot (e.g.: `.test_ui`).
 
-## Example
+### Use
 
 Example based on the abose "test" component, after running `devtools::document()`
 
@@ -152,3 +157,81 @@ server <- function(...){
 
 shinyApp(ui, server)
 ```
+
+## Example
+
+Here is the classic counter example but scoped and using JavaScript only.
+
+```r
+#' @component counter
+NULL
+
+#' counter javascript
+#' 
+#' counter javascript component.
+#' 
+#' @param ... Any other argument.
+#' 
+#' @keywords internal
+.counter_javascript <- \(...) {
+  "$(() => {
+    let index = 0
+    $('{{id button}}').on('click', (e) => {
+      index++;
+      $('{{id output}}').html(index);
+      $('{{id output}}').toggleClass('{{ns criminal}}');
+    })
+  })"
+}
+
+#' counter css
+#' 
+#' counter css component.
+#' 
+#' @param ... Any other argument.
+#' 
+#' @keywords internal
+.counter_css <- \(...) {
+  "{{class criminal}}{
+    color: crimson;
+    font-weight: bold;
+  }"
+}
+
+#' counter ui
+#' 
+#' counter UI component.
+#' 
+#' @param ns Shiny's namespace function.
+#' @param ... Any other argument.
+#' 
+#' @keywords internal
+.counter_ui <- \(ns, ...) {
+  shiny::div(
+    shiny::h1("Counter"),
+    shiny::tags$button(
+      class = "btn btn-sm btn-primary",
+      id = ns("button"),
+      "Counter"
+    ),
+    shiny::p(
+      id = ns("output"), 
+      0L
+    )
+  )
+}
+
+#' counter server
+#' 
+#' counter server component.
+#' 
+#' @param input,output,session Arguments passed from mdoule's server.
+#' @param ... Any other argument.
+#' 
+#' @keywords internal
+.counter_server <- \(input, output, session, ...) {
+  output$plot <- shiny::renderPlot(plot(stats::runif(200)))
+}
+
+```
+
