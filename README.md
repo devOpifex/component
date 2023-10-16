@@ -229,9 +229,6 @@ NULL
 #' @param ... Any other argument.
 #' 
 #' @keywords internal
-.counter_server <- \(input, output, session, ...) {
-  output$plot <- shiny::renderPlot(plot(stats::runif(200)))
-}
-
+.counter_server <- \(input, output, session, ...) {}
 ```
 
