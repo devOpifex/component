@@ -1,5 +1,5 @@
 #' @component COMPONENT
-COMPONENT_javascript <- \() {
+.COMPONENT_javascript <- \() {
   c(
     "$(() => {",
       "console.log('hello, components!');",
@@ -7,20 +7,20 @@ COMPONENT_javascript <- \() {
   )
 }
 
-COMPONENT_css <- \() {
+.COMPONENT_css <- \() {
   c(
     ".red{color:red;}",
     "h1{font-weight: bold;}"
   )
 }
 
-COMPONENT_ui <- \(id) {
+.COMPONENT_ui <- \(id) {
   div(
     h1("Component", class = "red"),
     plotOutput(ns("plot"))
   )
 }
 
-COMPONENT_server <- \(id) {
-  output$plot <- renderPlot(plot(runif(200)))
+.COMPONENT_server <- \(id) {
+  output$plot <- renderPlot(plot(stats::runif(200)))
 }

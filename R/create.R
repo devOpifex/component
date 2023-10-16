@@ -2,6 +2,8 @@
 #' 
 #' Create component
 #' 
+#' @param name Name of component.
+#' 
 #' @export
 create <- \(name) {
   if(missing(name))

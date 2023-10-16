@@ -6,6 +6,9 @@
 \usage{
 create(name)
 }
+\arguments{
+\item{name}{Name of component.}
+}
 \description{
 Create component
 }

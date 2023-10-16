@@ -22,8 +22,6 @@ roclet_process.roclet_component <- function(x, blocks, env, base_path, ...) {
       res <- tag$val
       res$fn_js <- env[[make_component_fn(res$component, "javascript")]]
       res$fn_css <- env[[make_component_fn(res$component, "css")]]
-      res$fn_ui <- env[[make_component_fn(res$component, "ui")]]
-      res$fn_server <- env[[make_component_fn(res$component, "server")]]
 
       res$file_js <- make_file(res$component, "js")
       res$file_css <- make_file(res$component, "css")
@@ -49,27 +47,28 @@ roclet_output.roclet_component <- function(x, results, base_path, ...) {
 
   dir_create_if_missing(base_path, "inst")
 
-  for (script in results) {
-    print(script)
-
+  for (component in results) {
     # we remove the generated R file
     # we're about to re-generate it
-    dir_create_if_missing(base_path, "inst", script$component)
-    remove_file_if_exists(script$path_r)
+    dir_create_if_missing(base_path, "inst", component$component)
+    remove_file_if_exists(component$path_r)
 
     # create JavaScript
     writeLines(
-      script$fn_js(),
-      script$path_js
+      component$fn_js(),
+      component$path_js
     )
 
     writeLines(
-      script$fn_css(),
-      script$path_css
+      component$fn_css(),
+      component$path_css
     )
 
     # create dependency
-    make_dependency(script)
+    make_dependency(component)
+
+    make_ui(component)
+    make_server(component)
   }
 
   invisible(NULL)
