@@ -189,7 +189,7 @@ NULL
 #' @param ... Any other argument.
 #' 
 #' @keywords internal
-.counter_css <- \(color = "crimson", ...) {
+.counter_css <- \(...) {
   "{{class criminal}}{
     color: {{color}};
     font-weight: bold;
