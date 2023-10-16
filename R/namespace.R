@@ -4,6 +4,7 @@
 #' 
 #' @param strings Vector of string to namespace.
 #' @param ns Namespace function.
+#' @param ... Environment to evaluate string.
 #' 
 #' @section Transformers:
 #' 
@@ -13,10 +14,25 @@
 #' * `json`: transforms `{{ json letters[1:2] }}` into `['a', 'b']`
 #' 
 #' @export
-namespace <- function(strings, ns) {
+namespace <- function(strings, ns, env = parent.frame()) {
+  if(missing(strings))
+    stop("missing `strings`")
+
+  if(missing(ns))
+    stop("missing `ns`")
+
+  if(!is.function(ns))
+    stop("`ns` must be a function")
+
   strings |>
     sapply(\(string) {
-      glue::glue(string, .open = "{{", .close = "}}", .transformer = namespace_transformer(ns))
+      glue::glue(
+        string, 
+        .open = "{{", 
+        .close = "}}", 
+        .transformer = namespace_transformer(ns),
+        .envir = env
+      )
     }) |>
     (\(.) paste0(., collapse = "\n"))()
 }
@@ -26,6 +42,9 @@ namespace_transformer <- function(ns, ...) {
     text <- trimws(text)
 
     text <- strsplit(text, " ")[[1]]
+
+    if(length(text) == 1L)
+      return(text[1] |> glue::identity_transformer(envir))
 
     arg <- ns(paste0(text[2:length(text)], collapse = " "))
 

@@ -4,12 +4,14 @@
 \alias{namespace}
 \title{Namespace}
 \usage{
-namespace(strings, ns)
+namespace(strings, ns, env = parent.frame())
 }
 \arguments{
 \item{strings}{Vector of string to namespace.}
 
 \item{ns}{Namespace function.}
+
+\item{...}{Environment to evaluate string.}
 }
 \description{
 Namespace a string.

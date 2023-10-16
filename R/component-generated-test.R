@@ -10,8 +10,8 @@ test_ui <- \(id, ...){
 	ns <- shiny::NS(id)
 	shiny::tagList(
 		shiny::tags$head(
-			shiny::tags$style(shiny::HTML(.test_css(...) |> component::namespace(ns))),
-			shiny::tags$script(shiny::HTML(.test_javascript(...) |> component::namespace(ns)))
+			shiny::tags$style(shiny::HTML(.test_css(...) |> component::namespace(ns, list(...)))),
+			shiny::tags$script(shiny::HTML(.test_javascript(...) |> (\(.) c("$(() => {", ., "})"))() |> component::namespace(ns, list(...))))
 		),
 		.test_ui(ns, ...)
 	)

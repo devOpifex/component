@@ -9,10 +9,8 @@ NULL
 #' 
 #' @keywords internal
 .COMPONENT_javascript <- \(...) {
-  "$(() => {
-    $('{{class red}}').on('mouseenter', (e) => {
-      $(e.target).toggleClass('{{ns red}}')
-    })
+  "$('{{class red}}').on('mouseenter', (e) => {
+    $(e.target).toggleClass('{{ns red}}')
   })"
 }
 

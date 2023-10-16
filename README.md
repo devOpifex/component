@@ -56,10 +56,8 @@ NULL
 #' 
 #' @keywords internal
 .test_javascript <- \(...) {
-    "$(() => {
-      $('{{class red}}').on('mouseenter', (e) => {
+    "$('{{class red}}').on('mouseenter', (e) => {
         $(e.target).toggleClass('{{ns red}}');
-      })
     })"
 }
 
@@ -191,9 +189,9 @@ NULL
 #' @param ... Any other argument.
 #' 
 #' @keywords internal
-.counter_css <- \(...) {
+.counter_css <- \(color = "crimson", ...) {
   "{{class criminal}}{
-    color: crimson;
+    color: {{color}};
     font-weight: bold;
   }"
 }
@@ -232,3 +230,21 @@ NULL
 .counter_server <- \(input, output, session, ...) {}
 ```
 
+Then, after documenting, it can be used as.
+
+```r
+library(shiny)
+
+ui <- fluidPage(
+    title = "Test",
+    counter_ui("c1", color = "red"),
+    counter_ui("c2", color = "blue"),
+)
+
+server <- function(...){
+    counter_server("c1")
+    counter_server("c2")
+}
+
+shinyApp(ui, server)
+```

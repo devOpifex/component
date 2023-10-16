@@ -16,7 +16,7 @@ create <- \(name) {
   con <- sprintf("R/component-%s.R", name)
   writeLines(file, con)
 
-  cat(con, "created!")
+  cat(con, "created!\n")
 
   usethis::use_package("component")
 
