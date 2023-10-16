@@ -30,6 +30,9 @@ button {
 </style>
 ```
 
+Where the file includes the style, script, and template.
+We reproduce the same with R with the addition of the server component.
+
 ## Installation
 
 You can install the development version of component from [GitHub](https://github.com/) with:
