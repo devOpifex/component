@@ -41,7 +41,7 @@ NULL
 #' 
 #' @keywords internal
 .COMPONENT_ui <- \(ns, ...) {
-  shiny:.div(
+  shiny::div(
     shiny::h1("Component", class = ns("red")),
     plotOutput(ns("plot"))
   )
