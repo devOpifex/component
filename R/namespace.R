@@ -13,6 +13,8 @@
 #' * `ns`: transforms `{{ ns red }}` into `namespace-red`
 #' * `json`: transforms `{{ json letters[1:2] }}` into `['a', 'b']`
 #' 
+#' @importFrom glue identity_transformer glue
+#' 
 #' @export
 namespace <- function(strings, ns, env = parent.frame()) {
   if(missing(strings))
@@ -26,7 +28,7 @@ namespace <- function(strings, ns, env = parent.frame()) {
 
   strings |>
     sapply(\(string) {
-      glue::glue(
+      glue(
         string, 
         .open = "{{", 
         .close = "}}", 
@@ -44,7 +46,7 @@ namespace_transformer <- function(ns, ...) {
     text <- strsplit(text, " ")[[1]]
 
     if(length(text) == 1L)
-      return(text[1] |> glue::identity_transformer(envir))
+      return(text[1] |> identity_transformer(envir))
 
     arg <- ns(paste0(text[2:length(text)], collapse = " "))
 
@@ -57,7 +59,7 @@ namespace_transformer <- function(ns, ...) {
 
     if(text[1] == "json")
       arg <- text[2] |> 
-        glue::identity_transformer(envir) |> 
+        identity_transformer(envir) |> 
         jsonlite::toJSON(auto_unbox = TRUE) |> 
         as.character()
 

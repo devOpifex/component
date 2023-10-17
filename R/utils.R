@@ -1,59 +1,5 @@
-pkg_file <- \(...){
-  system.file(..., package = "component")
-}
-
-file_exists <- function(...){
-  file.path(...) |>
-    file.exists()
-}
-
-remove_file_if_exists <- function(...){
-  if(!file_exists(...))
-    return()
-
-  file.remove(...)
-}
-
 make_component_fn <- function(name, what) {
   paste0(".", name, "_", what)
-}
-
-get_package_name <- function(){
-  pkg <- readLines("DESCRIPTION")[1]
-  gsub("Package: ", "", pkg) |> trimws()
-}
-
-make_write_lines <- \(file){
-  CON <- file(file, "a")
-
-  list(
-    w = \(...){
-      paste0(...) |>
-        writeLines(con = CON)
-    },
-    c = \(){
-      close(CON)
-    }
-  )
-}
-
-make_file <- function(component, extension) {
-  sprintf(
-    "%s.%s",
-    component,
-    extension
-  )
-}
-
-make_output_file <- function(component, extension, dir) {
-  sprintf(
-    "%s/%s",
-    dir,
-    make_file(
-      component,
-      extension
-    )
-  )
 }
 
 make_ui <- function(params) {
@@ -72,8 +18,8 @@ make_ui <- function(params) {
   wl$w("\tns <- shiny::NS(id)")
   wl$w("\tshiny::tagList(")
   wl$w("\t\tshiny::tags$head(")
-  wl$w("\t\t\tshiny::tags$style(shiny::HTML(.", params$component, "_css(...) |> component::namespace(ns, list(...)))),")
-  wl$w("\t\t\tshiny::tags$script(shiny::HTML(.", params$component, "_javascript(...) |> (\\(.) c(\"$(() => {\", ., \"})\"))() |> component::namespace(ns, list(...))))")
+  wl$w("\t\t\tshiny::tags$style(shiny::HTML(.", params$component, "_css(...) |> component::namespace(ns, list(...)) |> component::minify_css())),")
+  wl$w("\t\t\tshiny::tags$script(shiny::HTML(.", params$component, "_javascript(...) |> (\\(.) c(\"$(() => {\", ., \"})\"))() |> component::namespace(ns, list(...)) |> component::minify_js()))")
   wl$w("\t\t),")
   wl$w("\t\t.", params$component, "_ui(ns, ...)")
   wl$w("\t)")
