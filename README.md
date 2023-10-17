@@ -49,7 +49,7 @@ remotes::install_github("devOpifex/component")
 ## Create
 
 From a package (see [lerprechaun](https://leprechaun.opifex.org) or 
-[golem](https://thinkr-open.github.io/golem/)), create component.
+[golem](https://thinkr-open.github.io/golem/)), create a component.
 
 ``` r
 # create a component
@@ -57,7 +57,7 @@ From a package (see [lerprechaun](https://leprechaun.opifex.org) or
 component::create("test")
 ```
 
-This creates a new file in `R/` named `component-test.R`, see below.
+This creates a new file in `R/` named `component-test.R`.
 
 Components generate code via `devtools::document()` (more on that later)
 add the roxygen2 roclet to your `DESCRIPTION`, e.g.:
@@ -66,9 +66,17 @@ add the roxygen2 roclet to your `DESCRIPTION`, e.g.:
 Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd", "component::roclet_component"))
 ```
 
+So `create()` creates the component file but `devtools::document()` generates 
+the usable version of the component.
+
+```r
+component::create() => `component-<name>.R` => devtools::document() => `component-generated-<name>.R`
+```
+
 ## Component Anatomy
 
-The default component as created by `component::create()` looks something like the code below.
+The default component as created by `component::create()` looks something like the code below
+(`R/component-test.R`).
 
 ```r
 #' @component test
