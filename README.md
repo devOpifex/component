@@ -64,7 +64,7 @@ Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd", "compon
 
 ## Component Anatomy
 
-The default component as created by `create` looks something like the code below.
+The default component as created by `component::create()` looks something like the code below.
 
 ```r
 #' @component test
@@ -129,6 +129,12 @@ NULL
 
 The `@component` tag indicates the name of the component,
 in this example `test`.
+This tells component which functions to scan for:
+
+- `.<component>_javascript`
+- `.<component>_css`
+- `.<component>_server`
+- `.<component>_ui`
 
 ### JavaScript and CSS
 
@@ -139,6 +145,8 @@ scoped code.
 - `id`: transforms `{{ id red }}` into `#namespace-red`
 - `ns`: transforms `{{ ns red }}` into `namespace-red`
 - `json`: transforms `{{ json letters[1:2] }}` into `['a', 'b']`
+- You may still use `{{ x }}` in which case it will evaluate `x` 
+(passed `*ui` or `*server` function).
 
 These functions should return a character vector of length one or more.
 
@@ -148,20 +156,20 @@ Almost identical to the UI and server functions of a shiny module
 
 ### How to use
 
-The created template cannot be used as-is, by documenting the code with 
-`devtools::document()`.
-Documenting creates another corresponding file with two new functions for the 
-UI and server.
+The created template __cannot__ be used as-is, by documenting the code with 
+`devtools::document()` we create  a new file (`R/component-generated-<component>.R`)
+which contains:
 
-- `.test_ui` - `test_ui`
-- `.test_server` - `test_server`
+- `<component>_ui`
+- `<component>_server`
+
+In this example, `test_ui`, and `server_ui`.
 
 These are the functions that one should use in the application.
-Always work on the functions starting with a dot (e.g.: `.test_ui`).
+Always work on/edit the functions starting with a dot (e.g.: `.test_ui`),
+as the generated files get regenerated at every `devtools::document()` call.
 
-### Use
-
-Example based on the abose "test" component, after running `devtools::document()`
+Example based on the abose "test" component, after running `devtools::document()`.
 
 ```r
 library(shiny)
@@ -195,7 +203,7 @@ NULL
 #' @keywords internal
 .counter_javascript <- \(...) {
   "$(() => {
-    let index = 0
+    let index = 0;
     $('{{id button}}').on('click', (e) => {
       index++;
       $('{{id output}}').html(index);
@@ -270,3 +278,4 @@ server <- function(...){
 
 shinyApp(ui, server)
 ```
+

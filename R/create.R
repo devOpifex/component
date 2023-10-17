@@ -9,6 +9,8 @@ create <- \(name) {
   if(missing(name))
     stop("missing `name`")
 
+  name <- make_component_name(name)
+
   file <- pkg_file("templates/component.R") |>
     readLines() |>
     (\(.) gsub("COMPONENT", name, .))()

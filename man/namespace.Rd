@@ -11,7 +11,7 @@ namespace(strings, ns, env = parent.frame())
 
 \item{ns}{Namespace function.}
 
-\item{...}{Environment to evaluate string.}
+\item{env}{Environment to evaluate \code{strings}.}
 }
 \description{
 Namespace a string.

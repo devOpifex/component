@@ -4,7 +4,7 @@
 #' 
 #' @param strings Vector of string to namespace.
 #' @param ns Namespace function.
-#' @param ... Environment to evaluate string.
+#' @param env Environment to evaluate `strings`.
 #' 
 #' @section Transformers:
 #' 
