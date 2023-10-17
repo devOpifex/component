@@ -9,7 +9,7 @@ Creating components for [shiny](https://shiny.rstudio.com) inspired by [Vue](htt
 
 </div>
 
-It tackled three "issues" with Shiny modules:
+It tackles three "issues" with Shiny modules:
 
 1. Generating scoped (namespaced) CSS and JavaScript code.
 2. Places all the code for a module in a single file.
