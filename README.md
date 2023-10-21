@@ -103,8 +103,10 @@ NULL
 #' 
 #' @keywords internal
 .test_css <- \(...) {
+  c(
     "{{class red}}{color:red;}",
     "h1{font-weight: bold;}"
+  )
 }
 
 #' test ui
