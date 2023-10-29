@@ -167,7 +167,7 @@ The CSS is minified using [sass](https://github.com/rstudio/sass/), if you have
 it is used to minify the JavaScript otherwise it is not
 (install it with `npm install uglify-js -g`).
 
-## UI and Server
+### UI and Server
 
 Almost identical to the UI and server functions of a shiny module
 
