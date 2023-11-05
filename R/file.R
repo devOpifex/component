@@ -19,8 +19,9 @@ get_package_name <- function(){
   gsub("Package: ", "", pkg) |> trimws()
 }
 
+#' @importFrom styler style_file
 make_write_lines <- \(file){
-  CON <- file(file, "a")
+  CON <- file(file, "a") # nolint
 
   list(
     w = \(...){
@@ -29,6 +30,11 @@ make_write_lines <- \(file){
     },
     c = \(){
       close(CON)
+
+      if(!grepl("\\.R$", file))
+        return()
+
+      style_file(file)
     }
   )
 }
@@ -51,4 +57,3 @@ make_output_file <- function(component, extension, dir) {
     )
   )
 }
-

@@ -40,7 +40,6 @@ make_server <- function(params) {
   wl$w("#' ")
   wl$w("#' @keywords internal")
   wl$w(params$component, "_server <- \\(id, ...){")
-  wl$w("\tfn <- \\(input, output, session) {", params$component, "_server(input, output, session, ...)}")
   wl$w("\tshiny::moduleServer(id, .", params$component, "_server)")
   wl$w("}")
   wl$w("")

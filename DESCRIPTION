@@ -19,7 +19,8 @@ RoxygenNote: 7.2.3
 Imports:
   glue,
   sass,
-  roxygen2
+  roxygen2,
+  styler
 Suggests:
   shiny,
   htmltools,

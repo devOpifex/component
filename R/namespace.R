@@ -66,4 +66,3 @@ namespace_transformer <- function(ns, ...) {
     paste0(prefix, arg, collapse = " ")
   }
 }
-
